@@ -52,7 +52,7 @@ def ok():
 def search_raw():
     #print("Bienvenue, ouverture des 5 meilleures page Web pour apprendre "+args.skill_to_learn)
     query = request.args.get('q')
-    IT_learning_words = ["ressources", "documentation", "cheatsheet", "good practice"]
+    IT_learning_words = ["ressources", "documentation", "cheatsheet", "good practice", "code samples"]
     best_links = []
     best_thumbnails = []
 
@@ -81,29 +81,31 @@ def search_raw():
                 # On crée la miniature
                 #browser.get(link)
                 #browser.save_screenshot(query+"_"+good_word+'.png')
-                if( ".pdf" in link[-4:]):
-                    best_thumbnails.append("https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/pdfs-512.png")
-                    break
+                #if( ".pdf" in link[-4:]):
+                 #   best_thumbnails.append("https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/pdfs-512.png")
+                  #  break
 
                 # On cherche le lien du favicon
-                icons = favicon.get(link)
-                if(len(icons) != 0):
-                    icon = icons[0]
-                    print("Icon links: "+ icon.url)
-                    best_thumbnails.append(icon.url)
+                #icons = favicon.get(link)
+                #if(len(icons) != 0):
+                 #   icon = icons[0]
+                 #   print("Icon links: "+ icon.url)
+                 #   best_thumbnails.append(icon.url)
                     # On entre l'url du favicon
-                else:
-                    best_thumbnails.append(None)
-                
+                #else:
+                 #   best_thumbnails.append(None)
+
                 #print("link= ",link)
                 #print("\n")
                 break
-    
+
     json_response = {}
     json_response["thumbnail_list"] = best_thumbnails
     json_response["url_list"] = best_links
     json_response["epoch_time"] = int(time.time())
     json_response["result_count"] = len(best_links)
+    json_response["url_label"] = IT_learning_words
+    json_response["query_text"] = query
         
     #Render template page des résultats
     #return json.dumps(json_response, ensure_ascii=False).encode('utf-8')

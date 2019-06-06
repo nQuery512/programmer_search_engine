@@ -1,0 +1,105 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Learnify</title>
+    <meta name="description" content="Moteur de recherche">
+    <meta name="author" content="ok">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/result.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/search.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/label.css')}}">
+    <!--<link rel="icon" type="image/png" href= "{{ url_for('static', filename='images/icon.png')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css')}}"> --->
+
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery-3.3.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts.js')}}"></script>
+</head>
+
+<body>
+    <h1 id = "page-title">Résultat de la recherche</h1>
+    <input type="text" id="search-field" name="query"></input>
+    <button class="button2" id="search-button" onClick="redirect('search');"><span>Trouver!</span></button>
+    <script>addEnterEvent("#search-button");</script>
+    <div id ="page-wrapper">
+    
+        <div id='result-wrapper'>
+            <div id="thumbnail_list">
+            </div>
+            <div id="url_list">
+            </div>
+        </div>
+        <div id="redirect-wrapper">
+            <a id="go-to-home-link" href="http://localhost:5000/">Home</a
+        </div>
+        
+    </div>
+    
+    <script type="text/javascript">
+        json_response = "{{ json_response }}"
+        var parser = new DOMParser;
+        var dom = parser.parseFromString('<!doctype html><body>' + json_response,'text/html');
+        var json_object = dom.body.textContent;
+        json_object = decodeURIComponent(escape(json_object));
+        json_object = json_object.substring(2);
+        json_object = json_object.slice(0, -1);
+        json_object = JSON.parse(json_object);
+        console.log(json_object);
+        
+        rand_id_tab = []
+        rand_color_tab = []
+        $('#search-field').attr('placeholder',json_object["query_text"]);
+        // On boucle sur les clés json de la réponse
+        Object.keys(json_object).forEach(function(key) {
+            if (json_object.hasOwnProperty(key)) {
+                // On défini le html dynamique ici (url, icon, ...)
+                if(json_object[key].length > 1)
+                {
+                    if(key == "thumbnail_list")
+                    {
+                        for(var i in json_object[key])
+                        {
+                            $('#'+key).append('<img src="'+ json_object[key][i] +'" width="30" height="30"></img><br/><br/><br/>');
+                        }
+                    }
+                    else if(key == "url_list")
+                    {
+                        for(var i in json_object[key])
+                        {
+                            var rand_str = getRandomString(5);
+                            while(rand_str in rand_id_tab)
+                            {
+                                rand_str = getRandomString(5);
+                            }
+                            rand_id_tab[rand_id_tab.length] = rand_str;
+                                
+                            var random_color = generate_color();
+                            
+                            $('#'+key).append('<span class="deleteplz">'+'<a href="'+ json_object[key][i] + '">' + json_object[key][i] + '</a></span> <br/><br/>');
+                            $('#'+key).append('<div class= "label-wrapper" id='+rand_str+'><a class="label-text">'+json_object['url_label'][i]+'</a></div>');
+                            $('#'+rand_str).css('background-color', random_color);
+                            
+                            var rand_id_pdf = getRandomString(5);
+                            while(rand_id_pdf in rand_id_tab)
+                            {
+                                rand_id_pdf = getRandomString(5);
+                            }
+                            rand_id_tab[rand_id_tab.length] = rand_id_pdf;
+                            
+                            if(json_object[key][i].substring(json_object[key][i].length-4, json_object[key][i].length) == ".pdf")
+                                 $('#'+key).append('<div class= "label-wrapper" id='+rand_id_pdf+'><a class="label-text">PDF</a></div>');
+                                 $('#'+rand_id_pdf).css('background-color', '#F90909');
+                            
+                            $('#'+key).append('<br/><br/>');
+                        }
+                    }
+                }
+            }
+            
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+.label-wrapper 
+{
+    position: relative;
+    height: 3vh;
+    width: 5.5vw;
+    background-color: #4286f4;
+    border-radius: 100px;
+    text-align: center;
+    margin-right: 1vw;
+    font-style: bold;
+}
+
+.label-text
+{
+    top: -0.3vh;
+    font-size: 0.7vw;
+    text-align:center;
+    color:#FFFFFF;
+    position: relative;
+    font-weight: bold;
+}
+
+.label-test
+{
+    top: -0.3vh;
+    font-size: 0.7vw;
+    text-align:center;
+    color:#000000;
+    position: relative;
+}

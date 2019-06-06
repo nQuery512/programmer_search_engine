@@ -1,0 +1,45 @@
+html, body
+{
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    height: 100vh;
+    width: 100vw;
+    max-width: 100vw;
+}
+
+#page-wrapper
+{
+    position: relative;
+    top: 20vh;
+}
+#page-title
+{
+    text-align: center;
+}
+
+#result-wrapper div
+{
+    float: left;
+    clear: none; 
+}
+
+#thumbnail_list
+{
+    position: relative;
+    height:100vh; 
+    width:5vw;
+    left:0;
+}
+
+#url_list
+{
+    position: relative;
+    height:100vh;
+}
+#redirect-wrapper
+{
+    position:absolute;
+    background-color: #d3d3d3;
+    width:200px;
+    height: 100px;
+    left:75vw;
+}

@@ -1,0 +1,55 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Learnify</title>
+    <meta name="description" content="Moteur de recherche">
+    <meta name="author" content="ok">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/result.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/snippets.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/label.css')}}">
+    <!--<link rel="icon" type="image/png" href= "{{ url_for('static', filename='images/icon.png')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css')}}"> --->
+
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery-3.3.1.min.js')}}"></script>
+    <!--<script type="text/javascript" src="{{ url_for('static', filename='scripts.js')}}"></script>
+    --->
+</head>
+
+<body>
+    <h1 id = "page-title">Résultat de la recherche</h1>
+    <div id="result-title"> </div>
+
+    <div id="redirect-wrapper">
+        <a id="go-to-home-link" href="http://localhost:5000/">Home</a>
+    </div>
+    <div id="sourcecode-wrapper">
+    </div>
+    <script>
+        json_response = "{{ json_response }}"
+        var parser = new DOMParser;
+        var dom = parser.parseFromString('<!doctype html><body>' + json_response,'text/html');
+        var json_object = dom.body.textContent;
+        json_object = decodeURIComponent(escape(json_object));
+        json_object = json_object.substring(2);
+        json_object = json_object.slice(0, -1);
+        json_object = JSON.parse(json_object);
+        
+        for (var i in json_object['code'])
+        {
+            //console.log(json_object['code'][i]);
+            //<pre><code class="python" id ="ok"></code></pre>
+            $('#sourcecode-wrapper').append('<pre><code class="python">'+json_object['code'][i]+'</code></pre>');
+            $('#sourcecode-wrapper').append('<div class= "label-wrapper"><a class="label-text">Python</a></div></br>')
+            //container_block = document.getElementById("ok");
+            //container_block.innerHTML = json_object['code'][i];
+        }
+    </script>
+    
+    
+</body>
+</html>

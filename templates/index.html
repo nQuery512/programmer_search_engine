@@ -1,0 +1,29 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Analyse de relevé de stations velib</title>
+    <meta name="description" content="The HTML5 Herald">
+    <meta name="author" content="ok">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/button.css')}}">
+
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery-3.3.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts.js')}}"></script>
+    <link rel="icon" type="image/png" href= "{{ url_for('static', filename='images/icon.png')}}">
+</head>
+
+<body>
+    <h1 align="center" id="page-title">Choix du type de recherche:</h1>
+    <div id="wrapper">
+
+        <div>
+            <button class="button2" onClick="alt_redirect('skill-learn');"><span>Apprendre une compétence</span></button>
+            <button class="button2" onClick="alt_redirect('snippets');"><span>Analyse de problème</span></button>
+        </div>
+    </div>
+</body>
+</html>
